@@ -2,7 +2,7 @@ import ApolloClient, {createNetworkInterface} from "apollo-client"
 import Vue from "vue"
 import VueApollo from "vue-apollo"
 
-const uri = process.BROWSER_BUILD ? "/graphql" : "http://127.0.0.1:8000/graphql"
+const uri = process.BROWSER_BUILD ? "/api" : "http://127.0.0.1:8000/api"
 
 const networkInterface = createNetworkInterface({
   uri,
