@@ -20,8 +20,13 @@ const baseDir = () => {
 
 const dbDir = `${baseDir()}/db`
 
-const people = Promise.promisifyAll(new Datastore({
+const People = Promise.promisifyAll(new Datastore({
   filename: `${dbDir}/people`,
+  autoload: true
+}))
+
+const Settings = Promise.promisifyAll(new Datastore({
+  filename: `${dbDir}/settings`,
   autoload: true
 }))
 
@@ -87,6 +92,14 @@ input PersonInput {
   phone: String
 }
 
+type Settings {
+  defaultCurrencyCode: CurrencyCode!
+}
+
+input SettingsInput {
+  defaultCurrencyCode: CurrencyCode!
+}
+
 type Currency {
   code: CurrencyCode!
   amount: Float!
@@ -117,11 +130,13 @@ type Invoice {
 type Query {
   client: Person
   sender: Person
+  settings: Settings
 }
 
 type Mutation {
   updateClient(person: PersonInput): Person!
   updateSender(person: PersonInput): Person!
+  updateSettings(settings: SettingsInput!): Settings!
 }
 
 schema {
@@ -144,18 +159,29 @@ const resolvers = {
     }
   },
   Query: {
-    client: () => people.findOneAsync({type: "client"}),
-    sender: () => people.findOneAsync({type: "sender"})
+    client: () => People.findOneAsync({type: "client"}),
+    sender: () => People.findOneAsync({type: "sender"}),
+    settings: () => Settings.findOneAsync()
   },
   Mutation: {
     updateClient(root, {person}) {
-      return people.updateAsync({type: "client"}, {type: "client", ...person}, {upsert: true})
-      .then(() => people.findOneAsync({type: "client"}))
+      return People.updateAsync({type: "client"}, {type: "client", ...person}, {upsert: true})
+      .then(() => People.findOneAsync({type: "client"}))
     },
     updateSender(root, {person}) {
-      console.log(person)
-      return people.updateAsync({type: "sender"}, {type: "sender", ...person}, {upsert: true})
-      .then(() => people.findOneAsync({type: "sender"}))
+      return People.updateAsync({type: "sender"}, {type: "sender", ...person}, {upsert: true})
+      .then(() => People.findOneAsync({type: "sender"}))
+    },
+    updateSettings(root, {settings}) {
+      return Settings.findOneAsync()
+      .then((s) => {
+        if(s)
+          return Settings.updateAsync({_id: s._id}, settings)
+          .then(() => Settings.findOneAsync())
+        else
+          return Settings.insert(settings)
+          .then(() => Settings.findOneAsync())
+      })
     }
   }
 }
@@ -172,10 +198,10 @@ const schema = makeExecutableSchema({resolvers, typeDefs})
 
 const formatError = console.error
 
-app.use("/graphql", bodyParser.json(), graphqlExpress({formatError, schema}))
+app.use("/api", bodyParser.json(), graphqlExpress({formatError, schema}))
 
 app.use("/graphiql", graphiqlExpress({
-  endpointURL: "/graphql"
+  endpointURL: "/api"
 }))
 
 // Import and Set Nuxt.js options
