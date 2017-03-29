@@ -24,7 +24,7 @@
           </thead>
           <tbody class="table-striped" v-if="hasLineItems">
             <template v-for="item, index in lineItems">
-              <line-item-input v-model="item.value" :index="index" @removed="removeLineItem(index)" :key="index"/>
+              <line-item-input v-model="item" :index="index" @removed="removeLineItem(index)" :key="index"/>
             </template>
             <tr>
               <td>Subtotal</td>
@@ -119,7 +119,7 @@ export default {
       }`,
       update: (data) => data.settings.defaultCurrencyCode,
       result(data) {
-        this.lineItems = [{value: newLineItem(data.settings.defaultCurrencyCode)}]
+        this.lineItems = [newLineItem(data.settings.defaultCurrencyCode)]
       }
     }
   },
@@ -131,11 +131,11 @@ export default {
       return this.lineItems.length != 0
     },
     totalHours() {
-      return _.sum(this.lineItems.map((v) => v.value.hours))
+      return _.sum(this.lineItems.map((v) => v.hours))
     },
     subtotal() {
       return _.sum(this.lineItems.map((v) => {
-        return total(v.value)
+        return total(v)
       }))
     }
   },
