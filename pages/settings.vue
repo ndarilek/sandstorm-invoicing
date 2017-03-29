@@ -6,6 +6,11 @@
       <person-input prefix="sender" v-model="sender"/>
       <h2>Client</h2>
       <person-input prefix="client" v-model="client"/>
+      <h2>Miscellaneous</h2>
+      <div class="form-group">
+        <label for="defaultCurrencyCode">Default currency</label>
+        <currency-selector v-model="settings.defaultCurrencyCode"/>
+      </div>
       <button type="submit" class="btn btn-default">Save</button>
     </form>
   </div>
@@ -14,18 +19,25 @@
 <script>
   import _ from "lodash"
   import gql from "graphql-tag"
+  import CurrencySelector from "~components/currency/selector"
   import PersonInput from "~components/person/input"
   import {newPerson} from "~/lib/person"
 
+  const newSettings = () => ({
+    defaultCurrencyCode: "USD"
+  })
+
   export default {
     data: () => ({
+      client: newPerson(),
       sender: newPerson(),
-      client: newPerson()
+      settings: newSettings()
     }),
     apollo: {
       client: {
         query: gql`{
           client {
+            id
             organization
             name {
               first
@@ -52,6 +64,7 @@
       sender: {
         query: gql`{
           sender {
+            id
             organization
             name {
               first
@@ -74,36 +87,66 @@
           } else
             return newPerson()
         }
+      },
+      settings: {
+        query: gql`{
+          settings {
+            defaultCurrencyCode
+          }
+        }`,
+        update(data) {
+          if(data.settings) {
+            return data.settings
+          } else
+            return newSettings()
+        }
       }
     },
     methods: {
       save() {
-        const client = _.toPlainObject(this.client)
-        delete client.__typename
-        const sender = _.toPlainObject(this.sender)
-        delete sender.__typename
+        const cleanupPerson = (r) => {
+          delete r.id
+          delete r.__typename
+          r.name = _.toPlainObject(r.name)
+          delete r.name.__typename
+          r.address = _.toPlainObject(r.address)
+          delete r.address.__typename
+          return r
+        }
+        const client = cleanupPerson(_.toPlainObject(this.client))
+        const sender = cleanupPerson(_.toPlainObject(this.sender))
+        const settings = _.toPlainObject(this.settings)
+        delete settings.__typename
         this.$apollo.mutate({
-          mutation: gql`mutation($client: PersonInput!, $sender: PersonInput!) {
+          mutation: gql`mutation($client: PersonInput!, $sender: PersonInput!, $settings: SettingsInput!) {
             updateClient(person: $client) {
               id
             }
             updateSender(person: $sender) {
               id
             }
+            updateSettings(settings: $settings) {
+              defaultCurrencyCode
+            }
           }`,
           variables: {
             client,
-            sender
+            sender,
+            settings
           }
-        }).then((response) => {
-          console.log(response)
+        }).then(() => {
+          this.$apollo.client.resetStore()
+          this.$router.push({name: "index"})
         })
       }
     },
     head: {
       title: "Settings"
     },
-    components: {PersonInput}
+    components: {
+      CurrencySelector,
+      PersonInput
+    }
   }
 
 </script>

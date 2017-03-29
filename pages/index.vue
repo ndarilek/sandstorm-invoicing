@@ -1,6 +1,5 @@
 <template>
   <div>
-    <loading v-if="loading"/>
     <div v-if="!loading">
       <h1>Invoices</h1>
       <router-link :to="{name: 'new'}">New</router-link>
@@ -11,6 +10,7 @@
             </tr>
           </thead>
           <tbody class="table-striped">
+            <tr/>
           </tbody>
         </table>
       </div>
@@ -20,7 +20,6 @@
 
 <script>
 import gql from "graphql-tag"
-import Loading from "~components/loading"
 
 export default {
   apollo: {
@@ -47,20 +46,30 @@ export default {
           this.$router.push({name: "settings"})
       },
       pollInterval: 1000,
+    },
+    settings: {
+      query: gql`{
+        settings {
+          defaultCurrencyCode
+        }
+      }`,
+      result(data) {
+        if(!data.settings)
+          this.$router.push({name: "settings"})
+      },
+      pollInterval: 1000,
     }
   },
   data: () => ({
     loadingQueriesCount: 0,
     client: null,
-    sender: null
+    sender: null,
+    settings: null
   }),
   computed: {
     loading() {
-      return !(this.client && this.sender)
+      return !(this.client && this.sender && this.settings)
     }
-  },
-  components: {
-    Loading
   },
   head: {
     title: "Invoices"

@@ -161,7 +161,7 @@ const resolvers = {
   Query: {
     client: () => People.findOneAsync({type: "client"}),
     sender: () => People.findOneAsync({type: "sender"}),
-    settings: () => Settings.findOneAsync()
+    settings: () => Settings.findOneAsync({})
   },
   Mutation: {
     updateClient(root, {person}) {
@@ -173,15 +173,13 @@ const resolvers = {
       .then(() => People.findOneAsync({type: "sender"}))
     },
     updateSettings(root, {settings}) {
-      return Settings.findOneAsync()
+      return Settings.findOneAsync({})
       .then((s) => {
         if(s)
           return Settings.updateAsync({_id: s._id}, settings)
-          .then(() => Settings.findOneAsync())
         else
-          return Settings.insert(settings)
-          .then(() => Settings.findOneAsync())
-      })
+          return Settings.insertAsync(settings)
+      }).then(() => Settings.findOneAsync({}))
     }
   }
 }
