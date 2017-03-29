@@ -26,9 +26,9 @@ export default {
     }
   },
   methods: {
-    remove: () => this.$emit("removed", this.index),
-    lineItemTotal() {
-    }
+    remove() {
+      this.$emit("removed", this.index)
+    },
   },
   computed: {
     total() {
