@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# When you change this file, you must take manual action. Read this doc:
-# - https://docs.sandstorm.io/en/latest/vagrant-spk/customizing/#setupsh
-
 set -euo pipefail
 
 apt-get update
@@ -10,3 +7,16 @@ apt-get update
 curl -sL https://deb.nodesource.com/setup_7.x | sudo -E bash -
 apt-get install -y nodejs
 npm install -g yarn
+
+if [ ! -e /usr/local/bin/capnp ] ; then
+    sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -q clang autoconf pkg-config libtool git
+    cd /tmp
+    if [ ! -e capnproto ]; then git clone https://github.com/sandstorm-io/capnproto; fi
+    cd capnproto
+    git checkout master
+    cd c++
+    autoreconf -i
+    ./configure
+    make -j2
+    sudo make install
+fi
