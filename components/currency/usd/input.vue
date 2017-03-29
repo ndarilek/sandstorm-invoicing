@@ -1,5 +1,5 @@
 <template>
-  <span>$<input type="text" v-model="formattedValue" @input="input($event.target.value)"/></span>
+  <span>$<input type="number" v-model="formattedValue" @blur="input($event.target.value)"/></span>
 </template>
 
 <script>
@@ -18,8 +18,9 @@ export default {
   },
   methods: {
     input(value) {
-      const amount = parseInt(parseFloat(value)*100)
-      this.$emit("input", amount)
+      let amount = parseInt(parseFloat(value)*100)
+      if(amount)
+        this.$emit("input", amount)
     }
   }
 }

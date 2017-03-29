@@ -26,7 +26,9 @@ export default {
     }
   },
   methods: {
-    remove: () => this.$emit("removed", this.index)
+    remove: () => this.$emit("removed", this.index),
+    lineItemTotal() {
+    }
   },
   computed: {
     total() {
@@ -39,4 +41,3 @@ export default {
   }
 }
 </script>
-

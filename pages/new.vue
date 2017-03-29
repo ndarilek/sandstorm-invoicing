@@ -51,7 +51,7 @@ import PersonInput from "~components/person/input"
 import {total} from "~/lib/line-item"
 import {newPerson} from "~/lib/person"
 
-const newCurrency = (code) => ({code})
+const newCurrency = (code) => ({code, amount: 0})
 
 const newLineItem = (currencyCode) => ({
   item: "",
