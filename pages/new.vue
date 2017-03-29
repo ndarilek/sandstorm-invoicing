@@ -22,11 +22,11 @@
               <th>Actions</th>
             </tr>
           </thead>
-          <tbody class="table-striped">
+          <tbody class="table-striped" v-if="hasLineItems">
             <template v-for="item, index in lineItems">
               <line-item-input v-model="item.value" :index="index" @removed="removeLineItem(index)" :key="index"/>
             </template>
-            <tr v-if="hasLineItems">
+            <tr>
               <td>Subtotal</td>
               <td/>
               <td>{{totalHours}}</td>
