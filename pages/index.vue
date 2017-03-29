@@ -2,7 +2,7 @@
   <div>
     <div v-if="!loading">
       <h1>Invoices</h1>
-      <router-link :to="{name: 'new'}">New</router-link>
+      <router-link :to="{name: 'invoices-new'}">New</router-link>
       <div class="table-responsive">
         <table class="table table-bordered">
           <thead>
