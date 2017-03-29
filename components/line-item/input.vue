@@ -30,7 +30,6 @@ export default {
   },
   computed: {
     total() {
-      console.log("value", this.value)
       return total(this.value)
     }
   },
