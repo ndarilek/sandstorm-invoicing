@@ -1,5 +1,5 @@
 <template>
-  <component :is="input" v-model="value.amount""/>">
+  <component :is="input" v-model="value.amount""/>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <component :is="input" :amount="value.amount""/>">
+  <component :is="input" :amount="value.amount"/>
 </template>
 
 <script>
