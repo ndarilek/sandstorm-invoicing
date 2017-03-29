@@ -26,7 +26,7 @@
             <template v-for="item, index in lineItems">
               <line-item-input v-model="item.value" :index="index" @removed="removeLineItem(index)" :key="index"/>
             </template>
-            <tr>
+            <tr v-if="hasLineItems">
               <td>Subtotal</td>
               <td/>
               <td>{{totalHours}}</td>
@@ -127,6 +127,9 @@ export default {
     removeLineItem: (index) => this.lineItems.splice(index, 1)
   },
   computed: {
+    hasLineItems() {
+      return this.lineItems.length != 0
+    },
     totalHours() {
       return _.sum(this.lineItems.map((v) => v.value.hours))
     },
