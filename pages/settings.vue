@@ -21,7 +21,7 @@
   import gql from "graphql-tag"
   import CurrencySelector from "~components/currency/selector"
   import PersonInput from "~components/person/input"
-  import {newPerson} from "~/lib/person"
+  import {cleanup as cleanupPerson, newPerson} from "~/lib/person"
 
   const newSettings = () => ({
     defaultCurrencyCode: "USD"
@@ -104,17 +104,8 @@
     },
     methods: {
       save() {
-        const cleanupPerson = (r) => {
-          delete r.id
-          delete r.__typename
-          r.name = _.toPlainObject(r.name)
-          delete r.name.__typename
-          r.address = _.toPlainObject(r.address)
-          delete r.address.__typename
-          return r
-        }
-        const client = cleanupPerson(_.toPlainObject(this.client))
-        const sender = cleanupPerson(_.toPlainObject(this.sender))
+        const client = cleanupPerson(this.client)
+        const sender = cleanupPerson(this.sender)
         const settings = _.toPlainObject(this.settings)
         delete settings.__typename
         this.$apollo.mutate({

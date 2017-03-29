@@ -5,6 +5,7 @@
     <td><input type="number" v-model="value.hours"/></td>
     <td><currency-input v-model="value.rate"/></td>
     <td><currency :value="total"/></td>
+    <td><button class="btn" @click="remove">Remove</button></td>
   </tr>
 </template>
 
@@ -18,7 +19,14 @@ export default {
     value: {
       type: Object,
       required: true
+    },
+    index: {
+      type: Number,
+      required: true
     }
+  },
+  methods: {
+    remove: () => this.$emit("removed", this.index)
   },
   computed: {
     total() {
