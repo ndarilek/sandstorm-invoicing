@@ -2,7 +2,7 @@
   <tr>
     <td><input type="text" v-model="value.item"/></td>
     <td><input type="text" v-model="value.notes"/></td>
-    <td><input type="number" v-model="value.hours"/></td>
+    <td><input type="number" v-model="value.hours" min="0"/></td>
     <td><currency-input v-model="value.rate"/></td>
     <td><currency :value="total"/></td>
     <td><button class="btn" @click="remove">Remove</button></td>

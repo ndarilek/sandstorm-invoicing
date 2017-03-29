@@ -1,5 +1,5 @@
 <template>
-  <span>$<input type="number" v-model="formattedValue" @blur="input($event.target.value)"/></span>
+  <span>$<input type="number" v-model="formattedValue" @blur="input($event.target.value)" min="0"/></span>
 </template>
 
 <script>
