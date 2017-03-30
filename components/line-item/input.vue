@@ -1,10 +1,19 @@
 <template>
   <tr>
+    <td>
+      <select v-model="type" @change="reset">
+        <option value="fixed">Fixed</option>
+        <option value="time">Time</option>
+      </select>
+    </td>
     <td><input type="text" v-model="value.item"/></td>
     <td><input type="text" v-model="value.notes"/></td>
-    <td><input type="number" v-model="value.hours" min="0"/></td>
-    <td><currency-input v-model="value.rate"/></td>
-    <td><currency :value="total"/></td>
+    <td><input type="number" v-model="value.hours" min="0" v-if="isTime"/></td>
+    <td><currency-input v-model="value.rate" v-if="isTime"/></td>
+    <td>
+      <currency :value="totalTime" v-if="isTime"/>
+      <currency-input v-model="value.total" v-else/>
+    </td>
     <td><button class="btn" @click="remove">Remove</button></td>
   </tr>
 </template>
@@ -23,15 +32,36 @@ export default {
     index: {
       type: Number,
       required: true
+    },
+    currencyCode: {
+      type: String,
+      required: true
     }
   },
+  data: () => ({
+    type: "time"
+  }),
   methods: {
     remove() {
       this.$emit("removed", this.index)
     },
+    reset() {
+      if(this.type == "fixed") {
+        this.$delete(this.value, "hours")
+        this.$delete(this.value, "rate")
+        this.$set(this.value, "total", {code: this.currencyCode, amount: 0})
+      } else {
+        this.$delete(this.value, "total")
+        this.$set(this.value, "hours", 0)
+        this.$set(this.value, "rate", {code: this.currencyCode, amount: 0})
+      }
+    }
   },
   computed: {
-    total() {
+    isTime() {
+      return this.type == "time"
+    },
+    totalTime() {
       return total(this.value)
     }
   },

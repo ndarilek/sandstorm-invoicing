@@ -14,6 +14,7 @@
         <table class="table table-bordered">
           <thead>
             <tr>
+              <th>Type</th>
               <th>Item</th>
               <th>Notes</th>
               <th>Hours</th>
@@ -24,9 +25,10 @@
           </thead>
           <tbody class="table-striped" v-if="hasLineItems">
             <template v-for="item, index in lineItems">
-              <line-item-input v-model="item" :index="index" @removed="removeLineItem(index)" :key="index"/>
+              <line-item-input v-model="item" :index="index" @removed="removeLineItem(index)" :currencyCode="currencyCode" :key="index"/>
             </template>
             <tr>
+              <td/>
               <td>Subtotal</td>
               <td/>
               <td>{{totalHours}}</td>
@@ -156,7 +158,15 @@ export default {
       return this.lineItems.length != 0
     },
     totalHours() {
-      return _.sum(this.lineItems.map((v) => parseFloat(v.hours)))
+      return _.sum(
+        this.lineItems.map((v) => {
+          const hours = parseFloat(v.hours)
+          if(!hours)
+            return 0
+          else
+            return hours
+        })
+      )
     },
     subtotal() {
       const amount = _.sum(this.lineItems.map((v) => total(v).amount))

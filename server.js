@@ -123,7 +123,12 @@ input CurrencyInput {
 interface LineItem {
   item: String!
   notes: String!
-  rate: Currency!
+  total: Currency!
+}
+
+type FixedLineItem implements LineItem {
+  item: String!
+  notes: String!
   total: Currency!
 }
 
@@ -200,8 +205,11 @@ const resolvers = {
     __resolveType(obj, context, info) {
       if(obj.hours)
         return "TimeLineItem"
-      return null
+      return "FixedLineItem"
     }
+  },
+  FixedLineItem: {
+    total: (doc) => lineItemTotal(doc)
   },
   TimeLineItem: {
     total: (doc) => lineItemTotal(doc)
