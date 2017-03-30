@@ -146,7 +146,8 @@ export default {
           invoice
         }
       }).then((r) => {
-        console.log("Yay!", r.data)
+        const invoice = r.data.newInvoice
+        this.$router.push({name: "invoices-id", params: {id: invoice.id}})
       })
     }
   },

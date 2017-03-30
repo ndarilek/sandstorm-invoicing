@@ -7,10 +7,17 @@
         <table class="table table-bordered">
           <thead>
             <tr>
+              <th>ID</th>
+              <th>Date Issued</th>
+              <th>Total</th>
             </tr>
           </thead>
           <tbody class="table-striped">
-            <tr/>
+            <tr v-for="invoice in invoices">
+              <td><router-link :to="{name: 'invoices-id', params: {id: invoice.id}}">{{invoice.id}}</router-link></td>
+              <td>{{new Date(invoice.created).toLocaleDateString()}}</td>
+              <td><currency :value="invoice.total"/></td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -20,6 +27,7 @@
 
 <script>
 import gql from "graphql-tag"
+import Currency from "~components/currency"
 
 export default {
   apollo: {
@@ -58,18 +66,35 @@ export default {
           this.$router.push({name: "settings"})
       },
       pollInterval: 1000,
+    },
+    invoices: {
+      query: gql`{
+        invoices {
+          id
+          created
+          total {
+            code
+            amount
+          }
+        }
+      }`,
+      updateInterval: 1000
     }
   },
   data: () => ({
     loadingQueriesCount: 0,
     client: null,
     sender: null,
-    settings: null
+    settings: null,
+    invoices: []
   }),
   computed: {
     loading() {
       return !(this.client && this.sender && this.settings)
     }
+  },
+  components: {
+    Currency
   },
   head: {
     title: "Invoices"

@@ -160,6 +160,8 @@ input InvoiceInput {
 
 type Query {
   client: Person
+  invoice(id: String!): Invoice
+  invoices: [Invoice]
   sender: Person
   settings: Settings
 }
@@ -184,7 +186,7 @@ const resolvers = {
     id: (doc) => doc._id,
     total: (doc) => {
       const lineItems = doc.lineItems
-      const code = lineItems[0].code
+      const code = lineItemTotal(lineItems[0]).code
       const amount = _.sum(lineItems.map((v) => lineItemTotal(v).amount))
       return {code, amount}
     }
@@ -204,14 +206,19 @@ const resolvers = {
   },
   Query: {
     client: () => People.findOneAsync({type: "client"}),
+    invoice: (doc, {id}) => Invoices.findOneAsync({_id: id}),
+    invoices: () => Invoices.findAsync({}),
     sender: () => People.findOneAsync({type: "sender"}),
     settings: () => Settings.findOneAsync({})
   },
   Mutation: {
-    newInvoice(root, {invoice}) {
+    async newInvoice(root, {invoice}) {
+      const client = await People.findOneAsync({type: "client"})
+      const sender = await People.findOneAsync({type: "sender"})
+      invoice.client._id = client._id
+      invoice.sender._id = sender._id
       const now = new Date()
       return Invoices.insertAsync({...invoice, created: now, updated: now})
-      .then((doc) => doc)
     },
     updateClient(root, {person}) {
       return People.updateAsync({type: "client"}, {type: "client", ...person}, {upsert: true})
@@ -274,6 +281,4 @@ if(!fs.existsSync(baseDir()))
 if(!fs.existsSync(dbDir))
   fs.mkdirSync(dbDir)
 
-server.listen(port, host, () => {
-  console.log(`Server listening on ${host}:${port}`)
-})
+server.listen(port, host)

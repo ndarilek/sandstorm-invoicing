@@ -13,10 +13,6 @@
       <input type="text" :id="namespace('lastName')" v-model.trim="value.name.last"/>
     </div>
     <div class="form-group">
-      <label :for="namespace('email')">Email</label>
-      <input type="email" :id="namespace('email')" v-model.trim="value.email"/>
-    </div>
-    <div class="form-group">
       <label :for="namespace('address1')">Address line 1</label>
       <input type="text" :id="namespace('address1')" v-model.trim="value.address.line1"/>
     </div>
@@ -35,6 +31,10 @@
     <div class="form-group">
       <label :for="namespace('postalCode')">Zip/postal code</label>
       <input type="text" :id="namespace('postalCode')" v-model.trim="value.address.postalCode"/>
+    </div>
+    <div class="form-group">
+      <label :for="namespace('email')">Email</label>
+      <input type="email" :id="namespace('email')" v-model.trim="value.email"/>
     </div>
     <div class="form-group">
       <label :for="namespace('phone')">Phone</label>
