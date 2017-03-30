@@ -51,3 +51,64 @@ vagrant-spk dev
 ```
 
 visit [http://local.sandstorm.io:6080/](http://local.sandstorm.io:6080/).
+
+## Adding a Currency
+
+Here are the steps needed to add support for additional currencies:
+
+#### Decide on a Model
+
+Because floating point math is bad for currency, it is best to store amounts as an integer and convert to decimals for user input and output. USD values, for instance, are stored as values in cents, then converted to and from dollars when read or written. You'll need to model your currency in a similar way. Note that changing this model later is currently difficult or impossible, but if you track amounts in the smallest real value (I.e. no fractional cents) you're probably fine.
+
+#### Add a CurrencyCode to the API
+
+Start by editing _server.js_ and adding your currency code. For instance, if you're adding Sillycoin with a code of _SLC_, you might do the following:
+
+```
+enum CurrencyCode {
+  SLC
+  ...
+  USD
+}
+```
+
+#### Create Input and Output Components
+
+Next, you'll create an *input component* for reading currency values from forms, then converting them into integer values for persistence. You'll also create an *output component* for reading an integer from the API and formatting it for display. Perhaps the easiest way to do this is by copying an existing component set:
+
+`cp -R components/currency/usd components/currency/slc`
+
+Then edit the directory contents to ensure that the correct currency sign is used and placed correctly, and that values are converted to and from integers.
+
+#### Integrate Components
+
+With your components created, you must now tell the main currency input and output components which codes your components match up with. Start by editing _components/currency/input.vue_. Import your input component:
+
+```
+import slc from "./slc/input"
+import usd from "./usd/input"
+```
+
+Then, edit the `input` function as shown:
+
+```
+    input() {
+      if(this.value.code == "SLC")
+        return slc
+      else if(this.value.code == "USD")
+        return usd
+      else
+        return null
+    }
+```
+
+Finally, add your component to the template's component list:
+
+```
+  components: {
+    slc,
+    usd
+  }
+```
+
+Make similar changes to _components/currency/index.vue_, only this time you'll update the `output` function since this is an *output component*.

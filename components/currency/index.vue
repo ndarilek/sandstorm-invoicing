@@ -1,5 +1,5 @@
 <template>
-  <component :is="input" :amount="value.amount"/>
+  <component :is="output" :amount="value.amount"/>
 </template>
 
 <script>
@@ -13,7 +13,7 @@ export default {
     }
   },
   computed: {
-    input() {
+    output() {
       if(this.value.code == "USD")
         return usd
       else
