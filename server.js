@@ -1,3 +1,4 @@
+import _ from "lodash"
 import Promise from "bluebird"
 import Nuxt from "nuxt"
 import bodyParser from "body-parser"
@@ -11,6 +12,8 @@ import {makeExecutableSchema} from "graphql-tools"
 import "isomorphic-fetch"
 import Datastore from "nedb"
 
+import {total as lineItemTotal} from "./lib/line-item"
+
 const baseDir = () => {
   if(process.env.SANDSTORM)
     return "/var"
@@ -19,6 +22,11 @@ const baseDir = () => {
 }
 
 const dbDir = `${baseDir()}/db`
+
+const Invoices = Promise.promisifyAll(new Datastore({
+  filename: `${dbDir}/invoices`,
+  autoload: true
+}))
 
 const People = Promise.promisifyAll(new Datastore({
   filename: `${dbDir}/people`,
@@ -105,26 +113,49 @@ type Currency {
   amount: Float!
 }
 
+input CurrencyInput {
+  code: CurrencyCode!
+  amount: Float!
+}
+
 interface LineItem {
+  item: String!
+  notes: String!
+  rate: Currency!
   total: Currency!
 }
 
 type TimeLineItem implements LineItem {
+  item: String!
+  notes: String!
   hours: Int!
   rate: Currency!
   total: Currency!
 }
 
+input LineItemInput {
+  item: String!
+  notes: String!
+  hours: Int
+  rate: CurrencyInput!
+}
+
 scalar Date
 
 type Invoice {
-  sender: Person!
+  id: String!
   client: Person!
-  due: Date
+  sender: Person!
   lineItems: [LineItem]
   total: Currency!
   created: Date!
   updated: Date!
+}
+
+input InvoiceInput {
+  client: PersonInput!
+  sender: PersonInput!
+  lineItems: [LineItemInput]
 }
 
 type Query {
@@ -134,6 +165,7 @@ type Query {
 }
 
 type Mutation {
+  newInvoice(invoice: InvoiceInput!): Invoice!
   updateClient(person: PersonInput): Person!
   updateSender(person: PersonInput): Person!
   updateSettings(settings: SettingsInput!): Settings!
@@ -148,6 +180,15 @@ schema {
 
 const resolvers = {
   Date: GraphQLDate,
+  Invoice: {
+    id: (doc) => doc._id,
+    total: (doc) => {
+      const lineItems = doc.lineItems
+      const code = lineItems[0].code
+      const amount = _.sum(lineItems.map((v) => lineItemTotal(v).amount))
+      return {code, amount}
+    }
+  },
   Person: {
     id: (doc) => doc._id
   },
@@ -158,12 +199,20 @@ const resolvers = {
       return null
     }
   },
+  TimeLineItem: {
+    total: (doc) => lineItemTotal(doc)
+  },
   Query: {
     client: () => People.findOneAsync({type: "client"}),
     sender: () => People.findOneAsync({type: "sender"}),
     settings: () => Settings.findOneAsync({})
   },
   Mutation: {
+    newInvoice(root, {invoice}) {
+      const now = new Date()
+      return Invoices.insertAsync({...invoice, created: now, updated: now})
+      .then((doc) => doc)
+    },
     updateClient(root, {person}) {
       return People.updateAsync({type: "client"}, {type: "client", ...person}, {upsert: true})
       .then(() => People.findOneAsync({type: "client"}))

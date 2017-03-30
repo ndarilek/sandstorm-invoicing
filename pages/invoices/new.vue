@@ -36,6 +36,7 @@
           </tbody>
         </table>
       </div>
+      <button class="btn" @click.prevent="addLineItem">Add Line Item</button>
       <button type="submit" class="btn btn-default">Save</button>
     </form>
   </div>
@@ -49,7 +50,7 @@ import CurrencySelector from "~components/currency/selector"
 import LineItemInput from "~components/line-item/input"
 import PersonInput from "~components/person/input"
 import {total} from "~/lib/line-item"
-import {newPerson} from "~/lib/person"
+import {cleanup as cleanupPerson, newPerson} from "~/lib/person"
 
 const newCurrency = (code) => ({code, amount: 0})
 
@@ -57,8 +58,7 @@ const newLineItem = (currencyCode) => ({
   item: "",
   notes: "",
   hours: 0,
-  rate: newCurrency(currencyCode),
-  total: newCurrency(currencyCode)
+  rate: newCurrency(currencyCode)
 })
 
 export default {
@@ -124,19 +124,42 @@ export default {
     }
   },
   methods: {
-    removeLineItem: (index) => this.lineItems.splice(index, 1)
+    addLineItem() {
+      this.lineItems.push(newLineItem(this.currencyCode))
+    },
+    removeLineItem(index) {
+      this.lineItems.splice(index, 1)
+    },
+    save() {
+      const invoice = {
+        client: cleanupPerson(this.client),
+        sender: cleanupPerson(this.sender),
+        lineItems: this.lineItems
+      }
+      this.$apollo.mutate({
+        mutation: gql`mutation($invoice: InvoiceInput!) {
+          newInvoice(invoice: $invoice) {
+            id
+          }
+        }`,
+        variables: {
+          invoice
+        }
+      }).then((r) => {
+        console.log("Yay!", r.data)
+      })
+    }
   },
   computed: {
     hasLineItems() {
       return this.lineItems.length != 0
     },
     totalHours() {
-      return _.sum(this.lineItems.map((v) => v.hours))
+      return _.sum(this.lineItems.map((v) => parseFloat(v.hours)))
     },
     subtotal() {
-      return _.sum(this.lineItems.map((v) => {
-        return total(v)
-      }))
+      const amount = _.sum(this.lineItems.map((v) => total(v).amount))
+      return {code: this.currencyCode, amount}
     }
   },
   head: {
