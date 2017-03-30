@@ -16,6 +16,13 @@
           </tr>
         </thead>
         <tbody class="table-striped">
+          <tr v-for="item in invoice.lineItems">
+            <td>{{item.item}}</td>
+            <td>{{item.notes}}</td>
+            <td>{{item.hours}}</td>
+            <td><currency :value="item.rate"/></td>
+            <td><currency :value="item.total"/></td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -80,6 +87,21 @@ export default {
             total {
               code
               amount
+            }
+            lineItems {
+              ... on TimeLineItem {
+                item
+                notes
+                hours
+                rate {
+                  code
+                  amount
+                }
+                total {
+                  code
+                  amount
+                }
+              }
             }
           }
         }`,
