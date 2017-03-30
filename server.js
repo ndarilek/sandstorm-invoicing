@@ -17,6 +17,8 @@ import {total as lineItemTotal} from "./lib/line-item"
 const baseDir = () => {
   if(process.env.SANDSTORM)
     return "/var"
+  else if(process.env.VAGRANT)
+    return `${process.env.HOME}/var`
   else
     return "./var"
 }
