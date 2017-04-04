@@ -9,10 +9,12 @@ export default {
   async asyncData(context) {
     const id = context.params.id
     await context.store.dispatch("invoices/fetchInvoice", id)
-    return {invoice: context.store.getters["invoices/invoices"][id]}
+    return {id, invoice: context.store.getters["invoices/invoices"][id]}
   },
-  head: {
-    title: "Invoice"
+  head() {
+    return {
+      title: `Invoice ${this.id}`
+    }
   },
   components: {
     Invoice

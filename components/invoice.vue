@@ -57,9 +57,6 @@ export default {
   created() {
     this.fetchInvoice(this.id)
   },
-  head: {
-    title: "Invoice"
-  },
   components: {
     Currency,
     Person
