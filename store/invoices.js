@@ -100,7 +100,8 @@ export default {
         `,
         variables: {
           id
-        }
+        },
+        fetchPolicy: "network-only"
       })
       commit("addInvoice", data.invoice)
     },
@@ -114,7 +115,8 @@ export default {
           }
           ${personFragment}
           ${invoiceFragment}
-        `
+        `,
+        fetchPolicy: "network-only"
       })
       data.invoices.forEach((v) => commit("addInvoice", v))
     },
@@ -131,7 +133,8 @@ export default {
         `,
         variables: {
           id
-        }
+        },
+        fetchPolicy: "network-only"
       })
       commit("addInvoice", data.invoice)
     }

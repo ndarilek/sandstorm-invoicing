@@ -69,7 +69,8 @@ export default {
             }
           }
           ${personFragment}
-        `
+        `,
+        fetchPolicy: "network-only"
       })
       let person = data.client
       if(!person)
@@ -85,7 +86,8 @@ export default {
             }
           }
           ${personFragment}
-        `
+        `,
+        fetchPolicy: "network-only"
       })
       let person = data.sender
       if(!person)

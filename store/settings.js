@@ -29,7 +29,8 @@ export default {
             }
           }
           ${settingsFragment}
-        `
+        `,
+        fetchPolicy: "network-only"
       })
       let settings = data.settings
       if(!settings)
@@ -65,7 +66,8 @@ export default {
               }
             }
           }
-        `
+        `,
+        fetchPolicy: "network-only"
       })
       commit("setCurrencyCodes", data.__type.enumValues.map((v) => v.name))
     }
