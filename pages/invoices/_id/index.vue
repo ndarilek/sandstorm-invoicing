@@ -1,7 +1,7 @@
 <template>
   <div>
     <nav>
-      <ul>
+      <ul class="nav">
         <li role="presentation"><router-link :to="{name: 'invoices-id-standalone', params: {id: this.$route.params.id}}">Standalone</router-link></li>
       </ul>
     </nav>
