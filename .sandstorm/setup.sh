@@ -21,5 +21,5 @@ if [ ! -e /usr/local/bin/capnp ] ; then
     sudo make install
 fi
 echo "export CXX=clang++" >>/home/vagrant/.bash_profile
-echo "export VAGRANT=1" >/home/vagrant/.bash_profile
+echo "export VAGRANT=1" >>/home/vagrant/.bash_profile
 chown vagrant.vagrant /home/vagrant/.bash_profile
