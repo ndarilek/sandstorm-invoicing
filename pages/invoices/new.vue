@@ -3,10 +3,10 @@
     <h1>New Invoice</h1>
     <form @submit.prevent="save">
       <h2>Sender</h2>
-      <person-input prefix="sender" v-model="sender"/>
+      <person-input prefix="sender" v-model="invoice.sender" v-if="invoice.sender"/>
       <h2>Client</h2>
-      <person-input prefix="client" v-model="client"/>
-      <div class="form-group">
+      <person-input prefix="client" v-model="invoice.client" v-if="invoice.client"/>
+      <div class="form-group" v-if="currencyCode">
         <label for="currencyCode">Currency</label>
         <currency-selector v-model="currencyCode"/>
       </div>
@@ -24,8 +24,8 @@
             </tr>
           </thead>
           <tbody class="table-striped" v-if="hasLineItems">
-            <template v-for="item, index in lineItems">
-              <line-item-input v-model="item" :index="index" @removed="removeLineItem(index)" :currencyCode="currencyCode" :key="index"/>
+            <template v-for="item, index in invoice.lineItems">
+              <line-item-input v-model="item" :index="index" :currencyCode="currencyCode" :key="index"/>
             </template>
             <tr>
               <td/>
@@ -45,133 +45,58 @@
 </template>
 
 <script>
-import _ from "lodash"
-import gql from "graphql-tag"
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex"
 import Currency from "~components/currency"
 import CurrencySelector from "~components/currency/selector"
 import LineItemInput from "~components/line-item/input"
 import PersonInput from "~components/person/input"
-import {total} from "~/lib/line-item"
-import {cleanup as cleanupPerson, newPerson} from "~/lib/person"
-
-const newCurrency = (code) => ({code, amount: 0})
-
-const newLineItem = (currencyCode) => ({
-  item: "",
-  notes: "",
-  hours: 0,
-  rate: newCurrency(currencyCode)
-})
 
 export default {
-  data: () => ({
-    client: newPerson(),
-    sender: newPerson(),
-    currencyCode: "",
-    lineItems: []
-  }),
-  apollo: {
-    client: {
-      query: gql`{
-        client {
-          id
-          organization
-          name {
-            first
-            last
-          }
-          email
-          address {
-            line1
-            line2
-            city
-            state
-            postalCode
-          }
-          phone
-        }
-      }`
-    },
-    sender: {
-      query: gql`{
-        sender {
-          id
-          organization
-          name {
-            first
-            last
-          }
-          email
-          address {
-            line1
-            line2
-            city
-            state
-            postalCode
-          }
-          phone
-        }
-      }`
-    },
-    currencyCode: {
-      query: gql`{
-        settings {
-          defaultCurrencyCode
-        }
-      }`,
-      update: (data) => data.settings.defaultCurrencyCode,
-      result(data) {
-        this.lineItems = [newLineItem(data.settings.defaultCurrencyCode)]
-      }
-    }
-  },
   methods: {
+    ...mapActions({
+      fetchClient: "people/fetchClient",
+      fetchSender: "people/fetchSender",
+      fetchSettings: "settings/fetchSettings",
+      saveDraftInvoice: "invoices/saveDraftInvoice",
+      initDraft: "invoices/initDraft"
+    }),
+    ...mapMutations({
+      addLineItemToState: "invoices/addLineItem",
+      updateDraft: "invoices/updateDraft"
+    }),
     addLineItem() {
-      this.lineItems.push(newLineItem(this.currencyCode))
-    },
-    removeLineItem(index) {
-      this.lineItems.splice(index, 1)
+      this.addLineItemToState(this.currencyCode)
     },
     save() {
-      const invoice = {
-        client: cleanupPerson(this.client),
-        sender: cleanupPerson(this.sender),
-        lineItems: this.lineItems
-      }
-      this.$apollo.mutate({
-        mutation: gql`mutation($invoice: InvoiceInput!) {
-          newInvoice(invoice: $invoice) {
-            id
-          }
-        }`,
-        variables: {
-          invoice
-        }
-      }).then((r) => {
-        const invoice = r.data.newInvoice
-        this.$router.push({name: "invoices-id", params: {id: invoice.id}})
+      this.saveDraftInvoice()
+      .then(() => {
+        this.$router.push({name: "invoices-id", params: {id: this.invoice.id}})
+        this.initDraft()
       })
     }
   },
   computed: {
-    hasLineItems() {
-      return this.lineItems.length != 0
-    },
-    totalHours() {
-      return _.sum(
-        this.lineItems.map((v) => {
-          const hours = parseFloat(v.hours)
-          if(!hours)
-            return 0
-          else
-            return hours
-        })
-      )
-    },
-    subtotal() {
-      const amount = _.sum(this.lineItems.map((v) => total(v).amount))
-      return {code: this.currencyCode, amount}
+    ...mapState({
+      client: ({people}) => people.client,
+      sender: ({people}) => people.sender,
+      draft: ({invoices}) => invoices.draft,
+      currencyCode: ({settings}) => settings.settings.defaultCurrencyCode
+    }),
+    ...mapGetters({
+      hasLineItems: "invoices/hasLineItems",
+      subtotal: "invoices/subtotal",
+      totalHours: "invoices/totalHours"
+    }),
+    invoice: {
+      get() { return this.draft },
+      set(value) { this.updateDraft(value) }
     }
+  },
+  created() {
+    this.fetchClient()
+      .then(() => this.fetchSender())
+      .then(() => this.fetchSettings())
+      .then(() => this.initDraft())
   },
   head: {
     title: "New Invoice"
@@ -183,5 +108,4 @@ export default {
     PersonInput
   }
 }
-
 </script>

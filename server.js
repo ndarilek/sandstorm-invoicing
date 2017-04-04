@@ -12,6 +12,7 @@ import {makeExecutableSchema} from "graphql-tools"
 import "isomorphic-fetch"
 import Datastore from "nedb"
 
+import {totalCurrency, totalHours} from "./lib/invoice"
 import {total as lineItemTotal} from "./lib/line-item"
 
 const baseDir = () => {
@@ -149,12 +150,17 @@ input LineItemInput {
 
 scalar Date
 
+type Total {
+  hours: Int!
+  currency: Currency!
+}
+
 type Invoice {
   id: String!
   client: Person!
   sender: Person!
   lineItems: [LineItem]
-  total: Currency!
+  total: Total!
   created: Date!
   updated: Date!
 }
@@ -192,10 +198,9 @@ const resolvers = {
   Invoice: {
     id: (doc) => doc._id,
     total: (doc) => {
-      const lineItems = doc.lineItems
-      const code = lineItemTotal(lineItems[0]).code
-      const amount = _.sum(lineItems.map((v) => lineItemTotal(v).amount))
-      return {code, amount}
+      const hours = totalHours(doc)
+      const currency = totalCurrency(doc)
+      return {hours, currency}
     }
   },
   Person: {

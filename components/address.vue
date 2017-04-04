@@ -20,7 +20,10 @@ export default {
   },
   computed: {
     lastLine() {
-      return `${this.value.city}, ${this.value.state} ${this.value.postalCode}`
+      if(this.value.city && this.value.state && this.value.postalCode)
+        return `${this.value.city}, ${this.value.state} ${this.value.postalCode}`
+      else
+        return ""
     }
   }
 }

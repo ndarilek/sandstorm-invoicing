@@ -14,11 +14,12 @@
       <currency :value="totalTime" v-if="isTime"/>
       <currency-input v-model="value.total" v-else/>
     </td>
-    <td><button class="btn" @click="remove">Remove</button></td>
+    <td><button class="btn" @click.prevent="remove">Remove</button></td>
   </tr>
 </template>
 
 <script>
+import {mapMutations} from "vuex"
 import Currency from "~components/currency"
 import CurrencyInput from "~components/currency/input"
 import {total} from "~/lib/line-item"
@@ -42,8 +43,11 @@ export default {
     type: "time"
   }),
   methods: {
+    ...mapMutations({
+      removeLineItem: "invoices/removeLineItem",
+    }),
     remove() {
-      this.$emit("removed", this.index)
+      this.removeLineItem(this.index)
     },
     reset() {
       if(this.type == "fixed") {
@@ -59,6 +63,7 @@ export default {
   },
   computed: {
     isTime() {
+      console.log("isTime", this.type == "time")
       return this.type == "time"
     },
     totalTime() {

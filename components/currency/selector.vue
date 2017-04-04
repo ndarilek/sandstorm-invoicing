@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import gql from "graphql-tag"
+import {mapActions, mapState} from "vuex"
 
 export default {
   props: {
@@ -14,22 +14,14 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    codes: []
+  computed: mapState({
+    codes: ({settings}) => settings.currencyCodes
   }),
-  apollo: {
-    codes: {
-      query: gql`{
-        __type(name: "CurrencyCode") {
-          enumValues {
-            name
-          }
-        }
-      }`,
-      update(data) {
-        return data.__type.enumValues.map((v) => v.name)
-      }
-    }
+  methods: mapActions({
+    fetchCurrencyCodes: "settings/fetchCurrencyCodes"
+  }),
+  created() {
+    this.fetchCurrencyCodes()
   }
 }
 </script>

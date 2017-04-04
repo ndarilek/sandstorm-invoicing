@@ -17,127 +17,62 @@
 </template>
 
 <script>
-  import _ from "lodash"
-  import gql from "graphql-tag"
-  import CurrencySelector from "~components/currency/selector"
-  import PersonInput from "~components/person/input"
-  import {cleanup as cleanupPerson, newPerson} from "~/lib/person"
+import {mapActions, mapMutations, mapState} from "vuex"
+import CurrencySelector from "~components/currency/selector"
+import PersonInput from "~components/person/input"
 
-  const newSettings = () => ({
-    defaultCurrencyCode: "USD"
-  })
-
-  export default {
-    data: () => ({
-      client: newPerson(),
-      sender: newPerson(),
-      settings: newSettings()
+export default {
+  methods: {
+    ...mapActions({
+      fetchClient: "people/fetchClient",
+      fetchSender: "people/fetchSender",
+      fetchSettings: "settings/fetchSettings",
+      updateClient: "people/updateClient",
+      updateSender: "people/updateSender",
+      updateSettings: "settings/updateSettings"
     }),
-    apollo: {
-      client: {
-        query: gql`{
-          client {
-            id
-            organization
-            name {
-              first
-              last
-            }
-            email
-            address {
-              line1
-              line2
-              city
-              state
-              postalCode
-            }
-            phone
-          }
-        }`,
-        update(data) {
-          if(data.client) {
-            return data.client
-          } else
-            return newPerson()
-        }
-      },
-      sender: {
-        query: gql`{
-          sender {
-            id
-            organization
-            name {
-              first
-              last
-            }
-            email
-            address {
-              line1
-              line2
-              city
-              state
-              postalCode
-            }
-            phone
-          }
-        }`,
-        update(data) {
-          if(data.sender) {
-            return data.sender
-          } else
-            return newPerson()
-        }
-      },
-      settings: {
-        query: gql`{
-          settings {
-            defaultCurrencyCode
-          }
-        }`,
-        update(data) {
-          if(data.settings) {
-            return data.settings
-          } else
-            return newSettings()
-        }
-      }
-    },
-    methods: {
-      save() {
-        const client = cleanupPerson(this.client)
-        const sender = cleanupPerson(this.sender)
-        const settings = _.toPlainObject(this.settings)
-        delete settings.__typename
-        this.$apollo.mutate({
-          mutation: gql`mutation($client: PersonInput!, $sender: PersonInput!, $settings: SettingsInput!) {
-            updateClient(person: $client) {
-              id
-            }
-            updateSender(person: $sender) {
-              id
-            }
-            updateSettings(settings: $settings) {
-              defaultCurrencyCode
-            }
-          }`,
-          variables: {
-            client,
-            sender,
-            settings
-          }
-        }).then(() => {
-          this.$apollo.client.resetStore()
-          this.$router.push({name: "index"})
-        })
-      }
-    },
-    head: {
-      title: "Settings"
-    },
-    components: {
-      CurrencySelector,
-      PersonInput
+    ...mapMutations({
+      setClient: "people/setClient",
+      setSender: "people/setSender",
+      setSettings: "people/setSettings"
+    }),
+    save() {
+      this.updateClient(this.clientState)
+        .then(() => this.updateSender(this.senderState))
+        .then(() => this.updateSettings(this.settingsState))
+        .then(() => this.$router.push({name: "index"}))
     }
+  },
+  created() {
+    this.fetchClient()
+      .then(() => this.fetchSender())
+      .then(() => this.fetchSettings())
+  },
+  computed: {
+    ...mapState({
+      clientState: ({people}) => people.client,
+      senderState: ({people}) => people.sender,
+      settingsState: ({settings}) => settings.settings
+    }),
+    client: {
+      get() { return this.clientState },
+      set(value) { this.setClient(value) }
+    },
+    sender: {
+      get() { return this.senderState },
+      set(value) { this.setSender(value) }
+    },
+    settings: {
+      get() { return this.settingsState },
+      set(value) { this.setSettings(value) }
+    }
+  },
+  head: {
+    title: "Settings"
+  },
+  components: {
+    CurrencySelector,
+    PersonInput
   }
-
+}
 </script>

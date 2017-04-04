@@ -3,7 +3,10 @@
     <h1>INVOICE</h1>
     <person :value="invoice.sender"/>
     <person :value="invoice.client"/>
-    <p>Amount Due: <currency :value="invoice.total"/></p>
+    <dl>
+      <dt>Amount Due</dt>
+      <dd><currency :value="invoice.total.currency"/></dd>
+    </dl>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>
@@ -30,7 +33,7 @@
 </template>
 
 <script>
-import gql from "graphql-tag"
+import {mapActions, mapState} from "vuex"
 import Currency from "~components/currency"
 import Person from "~components/person"
 
@@ -41,76 +44,18 @@ export default {
       required: true
     }
   },
-  data: () => ({
-    invoice: null
-  }),
-  apollo: {
-    invoice() {
-      return {
-        query: gql` query($id: String!) {
-          invoice(id: $id) {
-            id
-            client {
-              id
-              organization
-              name {
-                first
-                last
-              }
-              email
-              address {
-                line1
-                line2
-                city
-                state
-                postalCode
-              }
-              phone
-            }
-            sender {
-              id
-              organization
-              name {
-                first
-                last
-              }
-              email
-              address {
-                line1
-                line2
-                city
-                state
-                postalCode
-              }
-              phone
-            }
-            total {
-              code
-              amount
-            }
-            lineItems {
-              ... on TimeLineItem {
-                item
-                notes
-                hours
-                rate {
-                  code
-                  amount
-                }
-                total {
-                  code
-                  amount
-                }
-              }
-            }
-          }
-        }`,
-        variables: {
-          id: this.id
-        },
-        pollInterval: 1000
-      }
+  computed: mapState({
+    invoice({invoices}) {
+      return invoices.invoices[this.id]
     }
+  }),
+  methods: {
+    ...mapActions({
+      fetchInvoice: "invoices/fetchInvoice"
+    })
+  },
+  created() {
+    this.fetchInvoice(this.id)
   },
   head: {
     title: "Invoice"
