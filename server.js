@@ -258,7 +258,7 @@ const resolvers = {
 const app = new Express()
 
 const server = require("http").createServer(app)
-const host = process.env.HOST || "127.0.0.1"
+const host = process.env.HOST || "0.0.0.0"
 const port = process.env.PORT || "8000"
 
 app.set("port", port)
