@@ -1,5 +1,12 @@
 <template>
-  <invoice :id="$route.params.id"/>
+  <div>
+    <nav>
+      <ul>
+        <li role="presentation"><router-link :to="{name: 'invoices-id-standalone', params: {id: this.$route.params.id}}">Standalone</router-link></li>
+      </ul>
+    </nav>
+    <invoice :id="$route.params.id"/>
+  </div>
 </template>
 
 <script>
