@@ -1,5 +1,6 @@
 import bodyParser from "body-parser"
 import Promise from "bluebird"
+import {exec} from "child_process"
 import Express from "express"
 import {GraphQLScalarType} from "graphql"
 import {Kind} from "graphql/language"
@@ -7,10 +8,11 @@ import {graphiqlExpress, graphqlExpress} from "graphql-server-express"
 import {makeExecutableSchema} from "graphql-tools"
 import "isomorphic-fetch"
 import _ from "lodash"
+import mkdirp from "mkdirp"
 import Datastore from "nedb"
 import Nuxt from "nuxt"
 
-import {dbDir} from "./lib/dirs"
+import {dbDir, staticDir} from "./lib/dirs"
 import {totalCurrency, totalHours} from "./lib/invoice"
 import {total as lineItemTotal} from "./lib/line-item"
 
@@ -223,6 +225,18 @@ const resolvers = {
       invoice.sender._id = sender._id
       const now = new Date()
       return Invoices.insertAsync({...invoice, created: now, updated: now})
+        .then((invoice) => {
+          const invoiceDir = `${staticDir}/invoices/${invoice._id}`
+          mkdirp.sync(invoiceDir)
+          const invoiceFile = `${invoiceDir}/index.html`
+          const url = `http://127.0.0.1:8000/invoices/${invoice._id}/standalone`
+          const cmd = `curl ${url} -o ${invoiceFile}`
+          console.log("cmd", cmd)
+          exec(cmd, () => {
+            exec(`perl -p -i -e 's/<script.*?script>//gs' ${invoiceFile}`)
+          })
+          return invoice
+        })
     },
     updateClient(root, {person}) {
       return People.updateAsync({type: "client"}, {type: "client", ...person}, {upsert: true})
