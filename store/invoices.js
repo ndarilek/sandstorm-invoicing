@@ -29,6 +29,7 @@ const invoiceFragment = gql`fragment invoice on Invoice {
       amount
     }
   }
+  due
   created
   updated
 }`
@@ -52,6 +53,7 @@ export default {
   getters: {
     invoices: (state) => _.values(state.invoices),
     currencyCode: (state, getters, rootState) => rootState.settings.settings.defaultCurrencyCode,
+    daysBeforeDue: (state, getters, rootState) => rootState.settings.settings.daysBeforeDue,
     hasLineItems: (state) => state.draft.lineItems.length != 0,
     subtotal: (state) => totalCurrency(state.draft),
     totalHours: (state)=>  totalHours(state.draft)
@@ -72,10 +74,13 @@ export default {
   },
   actions: {
     initDraft: ({commit, getters, rootState}) => {
+      const due = new Date()
+      due.setDate(due.getDate()+getters.daysBeforeDue)
       commit("resetDraft", {
         client: rootState.people.client,
         sender: rootState.people.sender,
-        lineItems: [newLineItem(getters.currencyCode)]
+        lineItems: [newLineItem(getters.currencyCode)],
+        due: due.toLocaleDateString()
       })
     },
     saveDraftInvoice: async ({state, commit}) => {

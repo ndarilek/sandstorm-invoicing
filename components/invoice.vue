@@ -6,6 +6,8 @@
     <dl>
       <dt>Amount Due</dt>
       <dd><currency :value="invoice.total.currency"/></dd>
+      <dt>Date Due</dt>
+      <dd>{{due}}</dd>
     </dl>
     <div class="table-responsive">
       <table class="table table-bordered">
@@ -44,11 +46,19 @@ export default {
       required: true
     }
   },
-  computed: mapState({
-    invoice({invoices}) {
-      return invoices.invoices[this.id]
+  computed: {
+    ...mapState({
+      invoice({invoices}) {
+        return invoices.invoices[this.id]
+      }
+    }),
+    due() {
+      if(this.invoice && this.invoice.due)
+        return new Date(this.invoice.due).toLocaleDateString()
+      else
+        return null
     }
-  }),
+  },
   methods: {
     ...mapActions({
       fetchInvoice: "invoices/fetchInvoice"

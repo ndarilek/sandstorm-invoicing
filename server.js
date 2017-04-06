@@ -95,10 +95,12 @@ input PersonInput {
 }
 
 type Settings {
+  daysBeforeDue: Int!
   defaultCurrencyCode: CurrencyCode!
 }
 
 input SettingsInput {
+  daysBeforeDue: Int!
   defaultCurrencyCode: CurrencyCode!
 }
 
@@ -153,6 +155,7 @@ type Invoice {
   sender: Person!
   lineItems: [LineItem]
   total: Total!
+  due: Date!
   created: Date!
   updated: Date!
 }
@@ -161,6 +164,7 @@ input InvoiceInput {
   client: PersonInput!
   sender: PersonInput!
   lineItems: [LineItemInput]
+  due: Date!
 }
 
 type Query {
@@ -200,13 +204,21 @@ const resolvers = {
   },
   LineItem: {
     __resolveType(obj, context, info) {
-      if(obj.hours)
+      if(obj.hours != null)
         return "TimeLineItem"
       return "FixedLineItem"
     }
   },
   TimeLineItem: {
     total: (doc) => lineItemTotal(doc)
+  },
+  Settings: {
+    daysBeforeDue: ({daysBeforeDue}) => {
+      return(daysBeforeDue ? daysBeforeDue : 30)
+    },
+    defaultCurrencyCode: ({defaultCurrencyCode}) => {
+      return(defaultCurrencyCode ? defaultCurrencyCode : "USD")
+    }
   },
   Query: {
     client: () => People.findOneAsync({type: "client"}),

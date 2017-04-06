@@ -3,10 +3,12 @@ import gql from "graphql-tag"
 import {apolloClient} from "~/lib/apollo"
 
 const settingsFragment = gql`fragment settings on Settings {
+  daysBeforeDue
   defaultCurrencyCode
 }`
 
 const newSettings = () => ({
+  daysBeforeDue: 30,
   defaultCurrencyCode: "USD"
 })
 

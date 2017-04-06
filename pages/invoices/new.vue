@@ -6,6 +6,10 @@
       <person-input prefix="sender" v-model="invoice.sender" v-if="invoice.sender"/>
       <h2>Client</h2>
       <person-input prefix="client" v-model="invoice.client" v-if="invoice.client"/>
+      <div class="form-group">
+        <label for="due">Due</label>
+        <input id="due" type="date" v-model="invoice.due"/>
+      </div>
       <div class="form-group" v-if="currencyCode">
         <label for="currencyCode">Currency</label>
         <currency-selector v-model="currencyCode"/>

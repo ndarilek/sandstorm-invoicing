@@ -8,6 +8,10 @@
       <person-input prefix="client" v-model="client"/>
       <h2>Miscellaneous</h2>
       <div class="form-group">
+        <label for="daysBeforeDue">Days before invoices are due</label>
+        <input v-model="settings.daysBeforeDue" type="number" min="0"/>
+      </div>
+      <div class="form-group">
         <label for="defaultCurrencyCode">Default currency</label>
         <currency-selector v-model="settings.defaultCurrencyCode"/>
       </div>
