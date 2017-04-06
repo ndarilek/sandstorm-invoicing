@@ -1,16 +1,15 @@
-import _ from "lodash"
-import Promise from "bluebird"
-import Nuxt from "nuxt"
 import bodyParser from "body-parser"
+import Promise from "bluebird"
 import Express from "express"
-import promiseMiddleware from "express-promise"
-const fs = Promise.promisifyAll(require("fs"))
+import fs from "fs"
 import {GraphQLScalarType} from "graphql"
 import {Kind} from "graphql/language"
 import {graphiqlExpress, graphqlExpress} from "graphql-server-express"
 import {makeExecutableSchema} from "graphql-tools"
 import "isomorphic-fetch"
+import _ from "lodash"
 import Datastore from "nedb"
+import Nuxt from "nuxt"
 
 import {totalCurrency, totalHours} from "./lib/invoice"
 import {total as lineItemTotal} from "./lib/line-item"
@@ -267,7 +266,15 @@ const schema = makeExecutableSchema({resolvers, typeDefs})
 
 const formatError = console.error
 
-app.use("/api", bodyParser.json(), graphqlExpress({formatError, schema}))
+app.use(
+  "/api",
+  bodyParser.json(),
+  graphqlExpress(req => ({
+    schema,
+    context: {sandstorm: req.sandstorm},
+    formatError,
+  }))
+)
 
 app.use("/graphiql", graphiqlExpress({
   endpointURL: "/api"
