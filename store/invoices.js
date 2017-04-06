@@ -87,7 +87,7 @@ export default {
       })
       commit("updateDraft", data.newInvoice)
     },
-    fetchInvoice: async ({commit}, {id}) => {
+    fetchInvoice: async ({commit}, id) => {
       const {data} = await apolloClient.query({
         query: gql`
           query($id: String!) {
@@ -119,24 +119,6 @@ export default {
         fetchPolicy: "network-only"
       })
       data.invoices.forEach((v) => commit("addInvoice", v))
-    },
-    fetchInvoice: async ({commit}, id) => {
-      const {data} = await apolloClient.query({
-        query: gql`
-          query($id: String!) {
-            invoice(id: $id) {
-              ...invoice
-            }
-          }
-          ${personFragment}
-          ${invoiceFragment}
-        `,
-        variables: {
-          id
-        },
-        fetchPolicy: "network-only"
-      })
-      commit("addInvoice", data.invoice)
     }
   }
 }
