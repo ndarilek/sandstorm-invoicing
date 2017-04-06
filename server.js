@@ -136,7 +136,8 @@ input LineItemInput {
   item: String!
   notes: String!
   hours: Int
-  rate: CurrencyInput!
+  rate: CurrencyInput
+  total: CurrencyInput
 }
 
 scalar Date
@@ -203,9 +204,6 @@ const resolvers = {
         return "TimeLineItem"
       return "FixedLineItem"
     }
-  },
-  FixedLineItem: {
-    total: (doc) => lineItemTotal(doc)
   },
   TimeLineItem: {
     total: (doc) => lineItemTotal(doc)

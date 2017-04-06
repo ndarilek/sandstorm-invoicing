@@ -23,7 +23,7 @@
             <td>{{item.item}}</td>
             <td>{{item.notes}}</td>
             <td>{{item.hours}}</td>
-            <td><currency :value="item.rate"/></td>
+            <td><span v-if="item.rate"><currency :value="item.rate"/></span></td>
             <td><currency :value="item.total"/></td>
           </tr>
         </tbody>

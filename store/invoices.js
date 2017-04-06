@@ -14,6 +14,14 @@ const invoiceFragment = gql`fragment invoice on Invoice {
   client {
     ...person
   }
+  lineItems {
+    item
+    notes
+    total {
+      code
+      amount
+    }
+  }
   total {
     hours
     currency {
