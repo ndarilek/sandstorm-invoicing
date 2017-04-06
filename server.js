@@ -1,7 +1,6 @@
 import bodyParser from "body-parser"
 import Promise from "bluebird"
 import Express from "express"
-import fs from "fs"
 import {GraphQLScalarType} from "graphql"
 import {Kind} from "graphql/language"
 import {graphiqlExpress, graphqlExpress} from "graphql-server-express"
@@ -11,19 +10,10 @@ import _ from "lodash"
 import Datastore from "nedb"
 import Nuxt from "nuxt"
 
+import {dbDir} from "./lib/dirs"
 import {totalCurrency, totalHours} from "./lib/invoice"
 import {total as lineItemTotal} from "./lib/line-item"
 
-const baseDir = () => {
-  if(process.env.SANDSTORM)
-    return "/var"
-  else if(process.env.VAGRANT)
-    return `${process.env.HOME}/var`
-  else
-    return "./var"
-}
-
-const dbDir = `${baseDir()}/db`
 
 const Invoices = Promise.promisifyAll(new Datastore({
   filename: `${dbDir}/invoices`,
@@ -296,11 +286,5 @@ if (config.dev) {
     process.exit(1)
   })
 }
-
-if(!fs.existsSync(baseDir()))
-  fs.mkdirSync(baseDir())
-
-if(!fs.existsSync(dbDir))
-  fs.mkdirSync(dbDir)
 
 server.listen(port, host)
