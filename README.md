@@ -16,7 +16,6 @@ Note that this is in *very* early development and not yet useful.
 
 For best results, run everything inside a [Vagrant](https://vagrantup.com) environment to ensure that you're using the correct version of Node and have all native dependencies.
 
-```
 Use [vagrant-spk](https://github.com/sandstorm-io/vagrant-spk), a tool designed to help app developers package apps for [Sandstorm](https://sandstorm.io).
 
 #### Prerequisites
