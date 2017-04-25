@@ -241,7 +241,6 @@ const resolvers = {
           const invoiceFile = `${invoiceDir}/index.html`
           const url = `http://127.0.0.1:8000/invoices/${invoice._id}/standalone`
           const cmd = `curl ${url} -o ${invoiceFile}`
-          console.log("cmd", cmd)
           exec(cmd, () => {
             exec(`perl -p -i -e 's/<script.*?script>//gs' ${invoiceFile}`)
           })
