@@ -117,9 +117,9 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.0.3.tgz#668dc4f17e0f516488a0bad99141d6d237499927"
+apollo-client@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.0.4.tgz#af75db8cdd27e08a835ddfb39807849e178540f9"
   dependencies:
     graphql "^0.9.3"
     graphql-anywhere "^3.0.1"
@@ -267,31 +267,7 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@^6.24.0:
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.24.0.tgz#8f36a0a77f5c155aed6f920b844d23ba56742a02"
-  dependencies:
-    babel-code-frame "^6.22.0"
-    babel-generator "^6.24.0"
-    babel-helpers "^6.23.0"
-    babel-messages "^6.23.0"
-    babel-register "^6.24.0"
-    babel-runtime "^6.22.0"
-    babel-template "^6.23.0"
-    babel-traverse "^6.23.1"
-    babel-types "^6.23.0"
-    babylon "^6.11.0"
-    convert-source-map "^1.1.0"
-    debug "^2.1.1"
-    json5 "^0.5.0"
-    lodash "^4.2.0"
-    minimatch "^3.0.2"
-    path-is-absolute "^1.0.0"
-    private "^0.1.6"
-    slash "^1.0.0"
-    source-map "^0.5.0"
-
-babel-core@^6.24.1:
+babel-core@^6.24.0, babel-core@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.24.1.tgz#8c428564dce1e1f41fb337ec34f4c3b022b5ad83"
   dependencies:
@@ -314,19 +290,6 @@ babel-core@^6.24.1:
     private "^0.1.6"
     slash "^1.0.0"
     source-map "^0.5.0"
-
-babel-generator@^6.24.0:
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/babel-generator/-/babel-generator-6.24.0.tgz#eba270a8cc4ce6e09a61be43465d7c62c1f87c56"
-  dependencies:
-    babel-messages "^6.23.0"
-    babel-runtime "^6.22.0"
-    babel-types "^6.23.0"
-    detect-indent "^4.0.0"
-    jsesc "^1.3.0"
-    lodash "^4.2.0"
-    source-map "^0.5.0"
-    trim-right "^1.0.1"
 
 babel-generator@^6.24.1:
   version "6.24.1"
@@ -455,13 +418,6 @@ babel-helper-replace-supers@^6.24.1:
 babel-helper-vue-jsx-merge-props@^2.0.2:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/babel-helper-vue-jsx-merge-props/-/babel-helper-vue-jsx-merge-props-2.0.2.tgz#aceb1c373588279e2755ea1cfd35c22394fd33f8"
-
-babel-helpers@^6.23.0:
-  version "6.23.0"
-  resolved "https://registry.yarnpkg.com/babel-helpers/-/babel-helpers-6.23.0.tgz#4f8f2e092d0b6a8808a4bde79c27f1e2ecf0d992"
-  dependencies:
-    babel-runtime "^6.22.0"
-    babel-template "^6.23.0"
 
 babel-helpers@^6.24.1:
   version "6.24.1"
@@ -898,18 +854,6 @@ babel-preset-vue@^0.1.0:
     babel-plugin-syntax-jsx "^6.18.0"
     babel-plugin-transform-vue-jsx "^3.1.2"
 
-babel-register@^6.24.0:
-  version "6.24.0"
-  resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.24.0.tgz#5e89f8463ba9970356d02eb07dabe3308b080cfd"
-  dependencies:
-    babel-core "^6.24.0"
-    babel-runtime "^6.22.0"
-    core-js "^2.4.0"
-    home-or-tmp "^2.0.0"
-    lodash "^4.2.0"
-    mkdirp "^0.5.1"
-    source-map-support "^0.4.2"
-
 babel-register@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-register/-/babel-register-6.24.1.tgz#7e10e13a2f71065bdfad5a1787ba45bca6ded75f"
@@ -929,7 +873,7 @@ babel-runtime@^6.18.0, babel-runtime@^6.20.0, babel-runtime@^6.22.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-template@^6.23.0, babel-template@^6.24.1:
+babel-template@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-template/-/babel-template-6.24.1.tgz#04ae514f1f93b3a2537f2a0f60a5a45fb8308333"
   dependencies:
@@ -939,7 +883,7 @@ babel-template@^6.23.0, babel-template@^6.24.1:
     babylon "^6.11.0"
     lodash "^4.2.0"
 
-babel-traverse@^6.23.1, babel-traverse@^6.24.1:
+babel-traverse@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-traverse/-/babel-traverse-6.24.1.tgz#ab36673fd356f9a0948659e7b338d5feadb31695"
   dependencies:
@@ -953,7 +897,7 @@ babel-traverse@^6.23.1, babel-traverse@^6.24.1:
     invariant "^2.2.0"
     lodash "^4.2.0"
 
-babel-types@^6.19.0, babel-types@^6.23.0, babel-types@^6.24.1:
+babel-types@^6.19.0, babel-types@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-types/-/babel-types-6.24.1.tgz#a136879dc15b3606bda0d90c1fc74304c2ff0975"
   dependencies:
@@ -2181,19 +2125,19 @@ graphql-server-core@^0.7.0:
   optionalDependencies:
     "@types/graphql" "^0.9.0"
 
-graphql-server-express@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/graphql-server-express/-/graphql-server-express-0.7.1.tgz#6038f7eac8f87938a0e4fc5a39eb8aaac00c84c5"
+graphql-server-express@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/graphql-server-express/-/graphql-server-express-0.7.2.tgz#d71f22509f38b2e364349d90e7cafd03b52e02cd"
   dependencies:
     graphql-server-core "^0.7.0"
-    graphql-server-module-graphiql "^0.7.1"
+    graphql-server-module-graphiql "^0.7.2"
   optionalDependencies:
     "@types/express" "^4.0.35"
     "@types/graphql" "^0.9.0"
 
-graphql-server-module-graphiql@^0.7.1:
-  version "0.7.1"
-  resolved "https://registry.yarnpkg.com/graphql-server-module-graphiql/-/graphql-server-module-graphiql-0.7.1.tgz#09cc2b80595bcb1165f3673138c268dd2166feb5"
+graphql-server-module-graphiql@^0.7.2:
+  version "0.7.2"
+  resolved "https://registry.yarnpkg.com/graphql-server-module-graphiql/-/graphql-server-module-graphiql-0.7.2.tgz#aa1f2a26eadbf7127c1b077e633d5086da52b330"
 
 graphql-tag@^2.0.0:
   version "2.0.0"
