@@ -1122,6 +1122,10 @@ caniuse-db@^1.0.30000346, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
   version "1.0.30000640"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000640.tgz#7b7fd3cf13c0d9d41f8754b577b202113e2be7ca"
 
+"capnp@git://github.com/kentonv/node-capnp#node4":
+  version "0.1.11"
+  resolved "git://github.com/kentonv/node-capnp#fbdb9959a9f80bb2cffb2be9bc5e10c18bf25d20"
+
 caseless@~0.11.0:
   version "0.11.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.11.0.tgz#715b96ea9841593cc33067923f5ec60ebda4f7d7"
@@ -1755,6 +1759,10 @@ es3ify@^0.1.3:
 es6-promise@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.0.2.tgz#010d5858423a5f118979665f46486a95c6ee2bb6"
+
+es6-promise@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.0.tgz#dda03ca8f9f89bc597e689842929de7ba8cebdf0"
 
 escape-html@~1.0.3:
   version "1.0.3"
@@ -3991,6 +3999,13 @@ rimraf@2, rimraf@~2.5.1, rimraf@~2.5.4:
 ripemd160@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
+
+sandstorm@ndarilek/node-sandstorm:
+  version "0.1.0"
+  resolved "https://codeload.github.com/ndarilek/node-sandstorm/tar.gz/1c9be353c7a56122fb289bf6a257837c9069f4af"
+  dependencies:
+    capnp "git://github.com/kentonv/node-capnp#node4"
+    es6-promise "^4.1.0"
 
 sax@~1.2.1:
   version "1.2.1"

@@ -31,6 +31,7 @@
     "moment": "^2.18.1",
     "nedb": "^1.8.0",
     "nuxt": "^0.10.6",
+    "sandstorm": "ndarilek/node-sandstorm",
     "toastr": "^2.1.2"
   },
   "devDependencies": {
