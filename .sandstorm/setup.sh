@@ -20,6 +20,12 @@ if [ ! -e /usr/local/bin/capnp ] ; then
     make -j2
     sudo make install
 fi
+
+if [ ! -e /opt/app/sandstorm-integration/getPublicId ] ; then
+    pushd /opt/app/sandstorm-integration
+    make
+fi
+
 echo "export CXX=clang++" >>/home/vagrant/.bash_profile
 echo "export VAGRANT=1" >>/home/vagrant/.bash_profile
 chown vagrant.vagrant /home/vagrant/.bash_profile
