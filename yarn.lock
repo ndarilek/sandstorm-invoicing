@@ -23,9 +23,9 @@
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.0.tgz#fccf859f0d2817687f210737dc3be48a18b1d754"
 
-"@types/isomorphic-fetch@0.0.33":
-  version "0.0.33"
-  resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.33.tgz#3ea1b86f8b73e6a7430d01d4dbd5b1f63fd72718"
+"@types/isomorphic-fetch@0.0.34":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/isomorphic-fetch/-/isomorphic-fetch-0.0.34.tgz#3c3483e606c041378438e951464f00e4e60706d6"
 
 "@types/mime@*":
   version "0.0.29"
@@ -63,11 +63,11 @@ acorn@^1.0.3:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-1.2.2.tgz#c8ce27de0acc76d896d2b1fad3df588d9e82f014"
 
-acorn@^4.0.11, acorn@^4.0.3:
+acorn@^4.0.3:
   version "4.0.11"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-4.0.11.tgz#edcda3bd937e7556410d42ed5860f67399c794c0"
 
-acorn@^5.0.0:
+acorn@^5.0.0, acorn@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.0.3.tgz#c460df08491463f028ccb82eab3730bf01087b3d"
 
@@ -117,9 +117,9 @@ anymatch@^1.3.0:
     arrify "^1.0.0"
     micromatch "^2.1.5"
 
-apollo-client@^1.0.4:
-  version "1.0.4"
-  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.0.4.tgz#af75db8cdd27e08a835ddfb39807849e178540f9"
+apollo-client@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/apollo-client/-/apollo-client-1.2.2.tgz#5ec656bf19197ebd77156c58d2e0e765bef648a7"
   dependencies:
     graphql "^0.9.3"
     graphql-anywhere "^3.0.1"
@@ -130,7 +130,7 @@ apollo-client@^1.0.4:
   optionalDependencies:
     "@types/async" "^2.0.31"
     "@types/graphql" "^0.9.0"
-    "@types/isomorphic-fetch" "0.0.33"
+    "@types/isomorphic-fetch" "0.0.34"
 
 aproba@^1.0.3:
   version "1.0.4"
@@ -267,7 +267,7 @@ babel-code-frame@^6.11.0, babel-code-frame@^6.22.0:
     esutils "^2.0.2"
     js-tokens "^3.0.0"
 
-babel-core@^6.24.0, babel-core@^6.24.1:
+babel-core@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-core/-/babel-core-6.24.1.tgz#8c428564dce1e1f41fb337ec34f4c3b022b5ad83"
   dependencies:
@@ -787,7 +787,7 @@ babel-preset-env@^1.2.1:
     electron-to-chromium "^1.2.6"
     invariant "^2.2.2"
 
-babel-preset-es2015@^6.24.0, babel-preset-es2015@^6.24.1:
+babel-preset-es2015@^6.24.1:
   version "6.24.1"
   resolved "https://registry.yarnpkg.com/babel-preset-es2015/-/babel-preset-es2015-6.24.1.tgz#d44050d6bc2c9feea702aaf38d727a0210538939"
   dependencies:
@@ -835,7 +835,7 @@ babel-preset-stage-3@^6.24.1:
     babel-plugin-transform-exponentiation-operator "^6.24.1"
     babel-plugin-transform-object-rest-spread "^6.22.0"
 
-babel-preset-vue-app@^1.1.1:
+babel-preset-vue-app@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/babel-preset-vue-app/-/babel-preset-vue-app-1.2.0.tgz#5ddfb7920020123a2482b12c6b36bdef9e3fb0ad"
   dependencies:
@@ -1522,13 +1522,13 @@ de-indent@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/de-indent/-/de-indent-1.0.2.tgz#b2038e846dc33baa5796128d0804b455b8c1e21d"
 
-debug@2.6.1:
+debug@2.6.1, debug@^2.1.1, debug@^2.2.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.1.tgz#79855090ba2c4e3115cc7d8769491d58f0491351"
   dependencies:
     ms "0.7.2"
 
-debug@^2.1.1, debug@^2.2.0, debug@^2.3.3, debug@^2.6.3:
+debug@^2.3.3, debug@^2.6.3:
   version "2.6.3"
   resolved "https://registry.yarnpkg.com/debug/-/debug-2.6.3.tgz#0f7eb8c30965ec08c72accfa0130c8b79984141d"
   dependencies:
@@ -1680,9 +1680,13 @@ ee-first@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
-ejs@^2.3.4, ejs@^2.5.5:
+ejs@^2.3.4:
   version "2.5.5"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.5.tgz#6ef4e954ea7dcf54f66aad2fe7aa421932d9ed77"
+
+ejs@^2.5.6:
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-2.5.6.tgz#479636bfa3fe3b1debd52087f0acb204b4f19c88"
 
 electron-to-chromium@^1.2.6, electron-to-chromium@^1.2.7:
   version "1.2.8"
@@ -1834,7 +1838,7 @@ express-promise@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/express-promise/-/express-promise-0.4.0.tgz#043c3cb7788d0ff299b06506df445722fdfad1e4"
 
-express@^4.14.1, express@^4.15.2:
+express@^4.15.2:
   version "4.15.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.15.2.tgz#af107fc148504457f2dca9a6f2571d7129b97b35"
   dependencies:
@@ -1904,9 +1908,9 @@ filename-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/filename-regex/-/filename-regex-2.0.0.tgz#996e3e80479b98b9897f15a8a58b3d084e926775"
 
-filesize@^3.5.4:
-  version "3.5.6"
-  resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.5.6.tgz#5fd98f3eac94ec9516ef8ed5782fad84a01a0a1a"
+filesize@^3.5.6:
+  version "3.5.9"
+  resolved "https://registry.yarnpkg.com/filesize/-/filesize-3.5.9.tgz#9e3dd8a9b124f5b2f1fb2ee9cd13a86c707bb222"
 
 fill-range@^2.1.0:
   version "2.2.3"
@@ -2161,11 +2165,11 @@ graphql-tools@^0.11.0:
   optionalDependencies:
     "@types/graphql" "^0.9.0"
 
-graphql@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.9.3.tgz#71fc0fa331bffb9c20678485861cfb370803118e"
+graphql@^0.9.3, graphql@^0.9.6:
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-0.9.6.tgz#514421e9d225c29dfc8fd305459abae58815ef2c"
   dependencies:
-    iterall "1.0.3"
+    iterall "^1.0.0"
 
 gzip-size@^3.0.0:
   version "3.0.0"
@@ -2248,7 +2252,7 @@ html-entities@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/html-entities/-/html-entities-1.2.0.tgz#41948caf85ce82fed36e4e6a0ed371a6664379e2"
 
-html-minifier@^3.2.3, html-minifier@^3.4.2:
+html-minifier@^3.2.3:
   version "3.4.2"
   resolved "https://registry.yarnpkg.com/html-minifier/-/html-minifier-3.4.2.tgz#31896baaf735c1d95f7a0b7291f9dc36c0720752"
   dependencies:
@@ -2260,6 +2264,19 @@ html-minifier@^3.2.3, html-minifier@^3.4.2:
     param-case "2.1.x"
     relateurl "0.2.x"
     uglify-js "2.8.x"
+
+html-minifier@^3.4.3:
+  version "3.4.4"
+  resolved "https://registry.yarnpkg.com/html-minifier/-/html-minifier-3.4.4.tgz#616fe3e3ef16da02b393d9a6099eeff468a35df0"
+  dependencies:
+    camel-case "3.0.x"
+    clean-css "4.0.x"
+    commander "2.9.x"
+    he "1.1.x"
+    ncname "1.0.x"
+    param-case "2.1.x"
+    relateurl "0.2.x"
+    uglify-js "~2.8.22"
 
 html-webpack-plugin@^2.28.0:
   version "2.28.0"
@@ -2524,9 +2541,9 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-iterall@1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.0.3.tgz#e0b31958f835013c323ff0b10943829ac69aa4b7"
+iterall@^1.0.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/iterall/-/iterall-1.1.1.tgz#f7f0af11e9a04ec6426260f5019d9fcca4d50214"
 
 jodid25519@^1.0.0:
   version "1.0.2"
@@ -3100,16 +3117,16 @@ number-is-nan@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/number-is-nan/-/number-is-nan-1.0.1.tgz#097b602b53422a522c1afb8790318336941a011d"
 
-nuxt@^0.10.6:
-  version "0.10.6"
-  resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-0.10.6.tgz#cdd261e9c234312ebd1dd58384c7c87d5c1bd60a"
+nuxt@^0.10.7:
+  version "0.10.7"
+  resolved "https://registry.yarnpkg.com/nuxt/-/nuxt-0.10.7.tgz#c49707e64ce27044f9bd347dc5e4600f999d33ff"
   dependencies:
     ansi-html "^0.0.7"
     autoprefixer "^6.7.7"
-    babel-core "^6.24.0"
+    babel-core "^6.24.1"
     babel-loader "^6.4.1"
-    babel-preset-es2015 "^6.24.0"
-    babel-preset-vue-app "^1.1.1"
+    babel-preset-es2015 "^6.24.1"
+    babel-preset-vue-app "^1.2.0"
     chokidar "^1.6.1"
     co "^4.6.0"
     compression "^1.6.2"
@@ -3120,12 +3137,12 @@ nuxt@^0.10.6:
     fs-extra "^2.1.2"
     glob "^7.1.1"
     hash-sum "^1.0.2"
-    html-minifier "^3.4.2"
+    html-minifier "^3.4.3"
     html-webpack-plugin "^2.28.0"
     lodash "^4.17.4"
     lru-cache "^4.0.2"
     memory-fs "^0.4.1"
-    offline-plugin "^4.6.1"
+    offline-plugin "^4.7.0"
     pify "^2.3.0"
     post-compile-webpack-plugin "^0.1.1"
     preload-webpack-plugin "^1.2.2"
@@ -3134,17 +3151,17 @@ nuxt@^0.10.6:
     serialize-javascript "^1.3.0"
     serve-static "^1.12.1"
     url-loader "^0.5.8"
-    vue "^2.2.6"
+    vue "~2.2.6"
     vue-loader "^11.3.4"
     vue-meta "^0.5.6"
-    vue-router "^2.3.1"
-    vue-server-renderer "^2.2.6"
+    vue-router "^2.4.0"
+    vue-server-renderer "~2.2.6"
     vue-ssr-html-stream "^2.2.0"
     vue-ssr-webpack-plugin "^3.0.0"
-    vue-template-compiler "^2.2.6"
-    vuex "^2.2.1"
-    webpack "^2.3.3"
-    webpack-bundle-analyzer "^2.3.1"
+    vue-template-compiler "~2.2.6"
+    vuex "^2.3.0"
+    webpack "^2.4.1"
+    webpack-bundle-analyzer "^2.4.0"
     webpack-dev-middleware "^1.10.1"
     webpack-hot-middleware "^2.18.0"
 
@@ -3179,7 +3196,7 @@ object.omit@^2.0.0:
     for-own "^0.1.4"
     is-extendable "^0.1.1"
 
-offline-plugin@^4.6.1:
+offline-plugin@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/offline-plugin/-/offline-plugin-4.7.0.tgz#4c2fca6cd46c6dd7f29fc94ade21e5f82a62c4df"
   dependencies:
@@ -3211,9 +3228,9 @@ once@~1.3.0, once@~1.3.3:
   dependencies:
     wrappy "1"
 
-opener@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.2.tgz#b32582080042af8680c389a499175b4c54fff523"
+opener@^1.4.3:
+  version "1.4.3"
+  resolved "https://registry.yarnpkg.com/opener/-/opener-1.4.3.tgz#5c6da2c5d7e5831e8ffa3964950f8d6674ac90b8"
 
 os-browserify@^0.2.0:
   version "0.2.1"
@@ -4002,7 +4019,7 @@ ripemd160@^1.0.0:
 
 sandstorm@ndarilek/node-sandstorm:
   version "0.1.0"
-  resolved "https://codeload.github.com/ndarilek/node-sandstorm/tar.gz/1c9be353c7a56122fb289bf6a257837c9069f4af"
+  resolved "https://codeload.github.com/ndarilek/node-sandstorm/tar.gz/86d3e17f4e12c51fa65ff46f4ddbb092b49625e0"
   dependencies:
     capnp "git://github.com/kentonv/node-capnp#node4"
     es6-promise "^4.1.0"
@@ -4384,6 +4401,15 @@ uglify-js@2.8.x, uglify-js@^2.8.5:
   optionalDependencies:
     uglify-to-browserify "~1.0.0"
 
+uglify-js@~2.8.22:
+  version "2.8.23"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.23.tgz#8230dd9783371232d62a7821e2cf9a817270a8a0"
+  dependencies:
+    source-map "~0.5.1"
+    yargs "~3.10.0"
+  optionalDependencies:
+    uglify-to-browserify "~1.0.0"
+
 uglify-to-browserify@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/uglify-to-browserify/-/uglify-to-browserify-1.0.2.tgz#6e0924d6bda6b5afe349e39a6d632850a0f882b7"
@@ -4552,11 +4578,11 @@ vue-meta@^0.5.6:
     lodash.isplainobject "^4.0.6"
     object-assign "^4.1.0"
 
-vue-router@^2.3.1:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.4.0.tgz#56a635e1434a1966ac095f2a485bebdcfc36cec5"
+vue-router@^2.4.0:
+  version "2.5.3"
+  resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-2.5.3.tgz#073783f564b6aece6c8a59c63e298dc2aabfb51b"
 
-vue-server-renderer@^2.2.6:
+vue-server-renderer@~2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/vue-server-renderer/-/vue-server-renderer-2.2.6.tgz#0a20535544b6948bca076380d058e19bb1304eef"
   dependencies:
@@ -4586,7 +4612,7 @@ vue-style-loader@^2.0.0:
     hash-sum "^1.0.2"
     loader-utils "^0.2.7"
 
-vue-template-compiler@^2.2.6:
+vue-template-compiler@~2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/vue-template-compiler/-/vue-template-compiler-2.2.6.tgz#2e2928daf0cd0feca9dfc35a9729adeae173ec68"
   dependencies:
@@ -4597,13 +4623,13 @@ vue-template-es2015-compiler@^1.2.2:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.5.0.tgz#e4f672ab1718a3abf9171a080daefac31be117e1"
 
-vue@^2.2.6:
+vue@~2.2.6:
   version "2.2.6"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.2.6.tgz#451714b394dd6d4eae7b773c40c2034a59621aed"
 
-vuex@^2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.2.1.tgz#a42d0ce18cb0e0359258f84bfd76835ed468c185"
+vuex@^2.3.0:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vuex/-/vuex-2.3.1.tgz#cde8e997c1f9957719bc7dea154f9aa691d981a6"
 
 watchpack@^1.3.1:
   version "1.3.1"
@@ -4613,20 +4639,20 @@ watchpack@^1.3.1:
     chokidar "^1.4.3"
     graceful-fs "^4.1.2"
 
-webpack-bundle-analyzer@^2.3.1:
-  version "2.3.1"
-  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.3.1.tgz#d97f8aadbcce68fc865c5787741d8549359a25cd"
+webpack-bundle-analyzer@^2.4.0:
+  version "2.7.0"
+  resolved "https://registry.yarnpkg.com/webpack-bundle-analyzer/-/webpack-bundle-analyzer-2.7.0.tgz#9a8320a9e33917ade47aa1369013bbf4d4a9f5af"
   dependencies:
-    acorn "^4.0.11"
+    acorn "^5.0.3"
     chalk "^1.1.3"
     commander "^2.9.0"
-    ejs "^2.5.5"
-    express "^4.14.1"
-    filesize "^3.5.4"
+    ejs "^2.5.6"
+    express "^4.15.2"
+    filesize "^3.5.6"
     gzip-size "^3.0.0"
     lodash "^4.17.4"
     mkdirp "^0.5.1"
-    opener "^1.4.2"
+    opener "^1.4.3"
 
 webpack-dev-middleware@^1.10.1:
   version "1.10.1"
@@ -4653,9 +4679,9 @@ webpack-sources@^0.2.3:
     source-list-map "^1.1.1"
     source-map "~0.5.3"
 
-webpack@^2.3.3:
-  version "2.4.1"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-2.4.1.tgz#15a91dbe34966d8a4b99c7d656efd92a2e5a6f6a"
+webpack@^2.4.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-2.5.1.tgz#61742f0cf8af555b87460a9cd8bba2f1e3ee2fce"
   dependencies:
     acorn "^5.0.0"
     acorn-dynamic-import "^2.0.0"
