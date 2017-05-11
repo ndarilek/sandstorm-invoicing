@@ -15,6 +15,12 @@ const invoiceFragment = gql`fragment invoice on Invoice {
     ...person
   }
   lineItems {
+    item
+    notes
+    total {
+      code
+      amount
+    }
     ...on TimeLineItem {
       hours
       rate {
